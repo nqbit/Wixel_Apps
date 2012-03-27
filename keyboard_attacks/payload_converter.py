@@ -171,6 +171,13 @@ def hex_padded(b):
 def str_bytecode(L):
     return [hex_padded(b & 0xFF) for b in L]
 
+def print_usage():
+    print "Usage: wixel_sk FILENAME"
+    exit()
+
+if len(sys.argv) == 1:
+    print_usage()
+
 f = open(sys.argv[1])
 byte_code = []
 
