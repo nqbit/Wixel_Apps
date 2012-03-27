@@ -153,6 +153,24 @@ def getModCommand(E):
     key = (E[i]).upper().strip()
     return [val, key_map[key]]
 
+# Args:
+#   b: the byte to be padded
+#
+# Returns:
+#   A string representing the byte in hex.
+def hex_padded(b):
+    b = hex(b)
+    s = len(b[2:])
+    return '0x' + '0'*(2-s) + b[2:]
+    
+# Args:
+#   L: A list of bytes representing the input commands.
+#
+# Returns:
+#   A list of strings representing the bytes in hex.
+def str_bytecode(L):
+    return [hex_padded(b & 0xFF) for b in L]
+
 f = open(sys.argv[1])
 byte_code = []
 
@@ -198,10 +216,11 @@ for line in f:
                     byte_code.append(key_map[c.upper()])
                 # Non-alphanumeric
                 else:
+                    # TODO(nqbit): Implement parsing of non-alphanumeric characters
                     pass
             # Reached a space so send one!
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map['SPACE'])
 
     
-print byte_code
+print str_bytecode(byte_code)
