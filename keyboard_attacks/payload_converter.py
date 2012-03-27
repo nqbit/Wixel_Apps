@@ -1,6 +1,147 @@
 #!/usr/bin/python
 import sys
 
+dict = {
+    'KEY_NONE'           , 0x00,
+    'A'                  , 0x04,
+    'B'                  , 0x05,
+    'C'                  , 0x06,
+    'D'                  , 0x07,
+    'E'                  , 0x08,
+    'F'                  , 0x09,
+    'G'                  , 0x0A,
+    'H'                  , 0x0B,
+    'I'                  , 0x0C,
+    'J'                  , 0x0D,
+    'K'                  , 0x0E,
+    'L'                  , 0x0F,
+    'M'                  , 0x10,
+    'N'                  , 0x11,
+    'O'                  , 0x12,
+    'P'                  , 0x13,
+    'Q'                  , 0x14,
+    'R'                  , 0x15,
+    'S'                  , 0x16,
+    'T'                  , 0x17,
+    'U'                  , 0x18,
+    'V'                  , 0x19,
+    'W'                  , 0x1A,
+    'X'                  , 0x1B,
+    'Y'                  , 0x1C,
+    'Z'                  , 0x1D,
+    '1'                  , 0x1E,
+    '2'                  , 0x1F,
+    '3'                  , 0x20,
+    '4'                  , 0x21,
+    '5'                  , 0x22,
+    '6'                  , 0x23,
+    '7'                  , 0x24,
+    '8'                  , 0x25,
+    '9'                  , 0x26,
+    '0'                  , 0x27,
+    'RETURN'             , 0x28,
+    'ESCAPE'             , 0x29,
+    'BACKSPACE'          , 0x2A,
+    'TAB'                , 0x2B,
+    'SPACE'              , 0x2C,
+    'MINUS'              , 0x2D,
+    'EQUAL'              , 0x2E,
+    'BRACKET_LEFT'       , 0x2F,
+    'BRACKET_RIGHT'      , 0x30,
+    'BACKSLASH'          , 0x31,
+    'EUROPE_1'           , 0x32,
+    'SEMICOLON'          , 0x33,
+    'APOSTROPHE'         , 0x34,
+    'GRAVE'              , 0x35,
+    'COMMA'              , 0x36,
+    'PERIOD'             , 0x37,
+    'SLASH'              , 0x38,
+    'CAPS_LOCK'          , 0x39,
+    'F1'                 , 0x3A,
+    'F2'                 , 0x3B,
+    'F3'                 , 0x3C,
+    'F4'                 , 0x3D,
+    'F5'                 , 0x3E,
+    'F6'                 , 0x3F,
+    'F7'                 , 0x40,
+    'F8'                 , 0x41,
+    'F9'                 , 0x42,
+    'F10'                , 0x43,
+    'F11'                , 0x44,
+    'F12'                , 0x45,
+    'PRINT_SCREEN'       , 0x46,
+    'SCROLL_LOCK'        , 0x47,
+    'PAUSE'              , 0x48,
+    'INSERT'             , 0x49,
+    'HOME'               , 0x4A,
+    'PAGE_UP'            , 0x4B,
+    'DELETE'             , 0x4C,
+    'END'                , 0x4D,
+    'PAGE_DOWN'          , 0x4E,
+    'ARROW_RIGHT'        , 0x4F,
+    'ARROW_LEFT'         , 0x50,
+    'ARROW_DOWN'         , 0x51,
+    'ARROW_UP'           , 0x52,
+    'NUM_LOCK'           , 0x53,
+    'KEYPAD_DIVIDE'      , 0x54,
+    'KEYPAD_MULTIPLY'    , 0x55,
+    'KEYPAD_SUBTRACT'    , 0x56,
+    'KEYPAD_ADD'         , 0x57,
+    'KEYPAD_ENTER'       , 0x58,
+    'KEYPAD_1'           , 0x59,
+    'KEYPAD_2'           , 0x5A,
+    'KEYPAD_3'           , 0x5B,
+    'KEYPAD_4'           , 0x5C,
+    'KEYPAD_5'           , 0x5D,
+    'KEYPAD_6'           , 0x5E,
+    'KEYPAD_7'           , 0x5F,
+    'KEYPAD_8'           , 0x60,
+    'KEYPAD_9'           , 0x61,
+    'KEYPAD_0'           , 0x62,
+    'KEYPAD_DECIMAL'     , 0x63,
+    'EUROPE_2'           , 0x64,
+    'APPLICATION'        , 0x65,
+    'POWER'              , 0x66,
+    'KEYPAD_EQUAL'       , 0x67,
+    'F13'                , 0x68,
+    'F14'                , 0x69,
+    'F15'                , 0x6A,
+    'CTRL_L'             , 0xE0,
+    'SHIFT_L'            , 0xE1,
+    'ALT_L'              , 0xE2,
+    'GUI_L'              , 0xE3,
+    'CTRL_R'             , 0xE4,
+    'SHIFT_R'            , 0xE5,
+    'ALT_R'              , 0xE6,
+    'GUI_R'              , 0xE7,
+
+    # Mod key bit location
+    # The mod key is taken in as a byte
+    # For: Ctrl + Alt + Delete (Assume Left Ctrl and Alt key)
+    #      Mod Byte(0b0000 0101) + Delete(0x4C)
+    'MOD_CTRL_L'   , 0,
+    'MOD_SHIFT_L'  , 1,
+    'MOD_ALT_L'    , 2,
+    'MOD_GUI_L'    , 3,
+    'MOD_CTRL_R'   , 4,
+    'MOD_SHIFT_R'  , 5,
+    'MOD_ALT_R'    , 6,
+    'MOD_GUI_R'    , 7
+    }
+
+
 f = open(sys.argv[1])
 for line in f:
-    
+    items = line.split(' ')
+    if (items[0] == 'GUI' or
+        items[0] == 'GUIR' or
+        items[0] == 'CTRL' or
+        items[0] == 'CTRLR' or
+        items[0] == 'ALT' or
+        items[0] == 'ALTR' or
+        items[0] == 'SHIFT' or
+        items[0] == 'SHIFTR':
+        
+        if len(items) > 1:
+            get_keyVal(items[1])
+        
