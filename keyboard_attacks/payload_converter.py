@@ -186,7 +186,22 @@ for line in f:
 
     # String functionality to type out full strings
     if (items[0] == 'STRING'):
-        
-    
+        for item in items[1:]:
+            for c in item:
+                if c.isalnum():
+                    if c.isupper():
+                        byte_code.append(MOD)
+                        byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                    # Send key press
+                    byte_code.append(KEY_PUSH_AND_SEND)
+                    byte_code.append(key_map[c.upper()])
+                # Non-alphanumeric
+                else:
+                    pass
+            # Reached a space so send one!
+            byte_code.append(KEY_PUSH_AND_SEND)
+            byte_code.append(key_map['SPACE'])
+
     
 print byte_code
