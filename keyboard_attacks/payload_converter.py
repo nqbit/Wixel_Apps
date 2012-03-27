@@ -1,7 +1,17 @@
 #!/usr/bin/python
 import sys
 
-dict = {
+DELAY             = 0x01
+MOD               = 0x02
+KEY_PUSH_0        = 0x03
+KEY_PUSH_1        = 0x13
+KEY_PUSH_2        = 0x23
+KEY_PUSH_3        = 0x33
+KEY_PUSH_4        = 0x43
+KEY_PUSH_5        = 0x53
+KEY_PUSH_AND_SEND = 0x04
+
+key_map = {
     'KEY_NONE'           , 0x00,
     'A'                  , 0x04,
     'B'                  , 0x05,
@@ -106,14 +116,14 @@ dict = {
     'F13'                , 0x68,
     'F14'                , 0x69,
     'F15'                , 0x6A,
-    'CTRL_L'             , 0xE0,
-    'SHIFT_L'            , 0xE1,
-    'ALT_L'              , 0xE2,
-    'GUI_L'              , 0xE3,
-    'CTRL_R'             , 0xE4,
-    'SHIFT_R'            , 0xE5,
-    'ALT_R'              , 0xE6,
-    'GUI_R'              , 0xE7,
+    'CTRL'             , 0xE0,
+    'SHIFT'            , 0xE1,
+    'ALT'              , 0xE2,
+    'GUI'              , 0xE3,
+    'CTRLR'             , 0xE4,
+    'SHIFTR'            , 0xE5,
+    'ALTR'              , 0xE6,
+    'GUIR'              , 0xE7,
 
     # Mod key bit location
     # The mod key is taken in as a byte
@@ -131,6 +141,8 @@ dict = {
 
 
 f = open(sys.argv[1])
+byte_code = []
+
 for line in f:
     items = line.split(' ')
     if (items[0] == 'GUI' or
@@ -144,4 +156,6 @@ for line in f:
         
         if len(items) > 1:
             get_keyVal(items[1])
-        
+        else:
+            byte_code.append(KEY_PUSH_AND_SEND)
+            byte_code.append(key_map[items[0]])
