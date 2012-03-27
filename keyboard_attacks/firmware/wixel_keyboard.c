@@ -7,6 +7,7 @@ static uint8 attack[] = { 0x01, 0xFF, 0xFF };
 
 void main() {
   uint16 i = 0;
+  uint16 default_delay = 0;
   uint32 size = sizeof(attack);
   systemInit();
   usbInit();
@@ -30,6 +31,10 @@ void main() {
     
   for (i = 0; i < size; i++) {
     switch(attack[i]) {
+    case 0x00:
+      i+=2;
+      default_delay = (attack[i-1] << 8) | attack[i];
+      break;
     case 0x01:
       i+=2;
       delayMs((attack[i-1] << 8) | attack[i]);
@@ -91,6 +96,8 @@ void main() {
     default:
       break;
     }
+
+    delayMs(default_delay);
   }
   boardService();
   usbHidService(); 
