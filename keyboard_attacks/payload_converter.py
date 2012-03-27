@@ -216,11 +216,91 @@ for line in f:
                     byte_code.append(key_map[c.upper()])
                 # Non-alphanumeric
                 else:
-                    # TODO(nqbit): Implement parsing of non-alphanumeric characters
-                    pass
+                    byte_code.append(KEY_PUSH_AND_SEND)
+                    if c == '~':
+                        print "Error: '~' not yet implemented"
+                        exit()
+                    if c == '-' or c == '_':
+                        if c == '_':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['MINUS'])
+                    if c == '=':
+                        if c == '+':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['EQUAL'])
+                    if c == '[':
+                        if c == '{':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['BRACKET_LEFT'])
+                    if c == ']':
+                        if c == '}':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['BRACKET_RIGHT'])
+                    if c == '\\':
+                        if c == '|':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['BACKSLASH'])
+                    if c == ';':
+                        if c == ':':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['SEMICOLON'])
+                    if c == '\'':
+                        if c == '"':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['APOSTROPHE'])
+                    if c == ',':
+                        if c == '<':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['COMMA'])
+                    if c == '.':
+                        if c == '>':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['PERIOD'])
+                    if c == '/':
+                        if c == '?':
+                            byte_code.append(MOD)
+                            byte_code.append(1 << key_map['MOD_SHIFT'])
+
+                        byte_code.append(KEY_PUSH_AND_SEND)
+                        byte_code.append(key_map['SLASH'])
+
             # Reached a space so send one!
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map['SPACE'])
-
+        
+        # Attempt to parse the rest of the keys.
+        # TODO(nqbit): Handle erros as this should throw an error for
+        # an undefined command.
+        else:
+            byte_code.append(KEY_PUSH_AND_SEND)
+            byte_code.append(key_map[items[0]])
+                
     
 print str_bytecode(byte_code)
