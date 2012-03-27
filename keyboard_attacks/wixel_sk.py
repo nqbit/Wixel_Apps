@@ -49,7 +49,7 @@ key_map = {
     '8'                  : 0x25,
     '9'                  : 0x26,
     '0'                  : 0x27,
-    'RETURN'             : 0x28,
+    'ENTER'              : 0x28,
     'ESCAPE'             : 0x29,
     'BACKSPACE'          : 0x2A,
     'TAB'                : 0x2B,
@@ -79,7 +79,7 @@ key_map = {
     'F10'                : 0x43,
     'F11'                : 0x44,
     'F12'                : 0x45,
-    'PRINT_SCREEN'       : 0x46,
+    'PRINTSCREEN'        : 0x46,
     'SCROLL_LOCK'        : 0x47,
     'PAUSE'              : 0x48,
     'INSERT'             : 0x49,
@@ -110,7 +110,7 @@ key_map = {
     'KEYPAD_0'           : 0x62,
     'KEYPAD_DECIMAL'     : 0x63,
     'EUROPE_2'           : 0x64,
-    'APPLICATION'        : 0x65,
+    'MENU'               : 0x65,
     'POWER'              : 0x66,
     'KEYPAD_EQUAL'       : 0x67,
     'F13'                : 0x68,
@@ -172,7 +172,7 @@ def str_bytecode(L):
     return [hex_padded(b & 0xFF) for b in L]
 
 def print_usage():
-    print "Usage: wixel_sk FILENAME"
+    print "Usage: wixel_sk FILENAME -[c|b|i]"
     exit()
 
 if len(sys.argv) == 1:
@@ -183,7 +183,6 @@ byte_code = []
 
 for line in f:
     items = line.split(' ')
-
     # Modifier commands
     if (items[0] == 'GUI' or
         items[0] == 'GUIR' or
@@ -202,7 +201,7 @@ for line in f:
             byte_code.append(key_map[items[0]])
 
     # Delay functionality
-    if (items[0] == 'DELAY'):
+    elif (items[0] == 'DELAY'):
         byte_code.append(DELAY)
         # High byte
         byte_code.append((int(items[1]) >> 8) & 0xFF)
@@ -210,7 +209,7 @@ for line in f:
         byte_code.append(int(items[1]) & 0xFF)
 
     # String functionality to type out full strings
-    if (items[0] == 'STRING'):
+    elif (items[0] == 'STRING'):
         for item in items[1:]:
             for c in item:
                 if c.isalnum():
@@ -302,12 +301,12 @@ for line in f:
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map['SPACE'])
         
-        # Attempt to parse the rest of the keys.
-        # TODO(nqbit): Handle erros as this should throw an error for
-        # an undefined command.
-        else:
-            byte_code.append(KEY_PUSH_AND_SEND)
-            byte_code.append(key_map[items[0]])
+    # Attempt to parse the rest of the keys.
+    # TODO(nqbit): Handle erros as this should throw an error for
+    # an undefined command.
+    else:
+        byte_code.append(KEY_PUSH_AND_SEND)
+        byte_code.append(key_map[items[0].strip()])
                 
 if len(sys.argv) == 3 and byte_code:
     if sys.argv[2] == '-c':
