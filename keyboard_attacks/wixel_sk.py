@@ -151,7 +151,7 @@ def getModCommand(E):
         val = val | (1 << key_map['MOD_' + E[i]])
         i = i + 1
     key = (E[i]).upper().strip()
-    return [val, key_map[key]]
+    return [val, KEY_PUSH_AND_SEND, key_map[key]]
 
 # Args:
 #   b: the byte to be padded
