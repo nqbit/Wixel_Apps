@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import sys
 
+DEFAULT_DELAY     = 0x01
 DELAY             = 0x01
 MOD               = 0x02
 KEY_PUSH_0        = 0x03
@@ -203,6 +204,14 @@ for line in f:
     # Ignore line. It is like a comment.
     elif (items[0] == 'REM'):
         pass
+
+    # Default Delay functionality
+    elif (items[0] == 'DEFAULT_DELAY'):
+        byte_code.append(DEFAULT_DELAY)
+        # High byte
+        byte_code.append((int(items[1]) >> 8) & 0xFF)
+        # Low byte
+        byte_code.append(int(items[1]) & 0xFF)
 
     # Delay functionality
     elif (items[0] == 'DELAY'):
