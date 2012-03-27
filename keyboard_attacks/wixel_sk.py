@@ -200,6 +200,10 @@ for line in f:
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map[items[0]])
 
+    # Ignore line. It is like a comment.
+    elif (items[0] == 'REM'):
+        pass
+
     # Delay functionality
     elif (items[0] == 'DELAY'):
         byte_code.append(DELAY)
