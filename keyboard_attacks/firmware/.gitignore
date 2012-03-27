@@ -1,0 +1,15 @@
+# Ignore Wixel Generated Files #
+*.wxl
+*.cdb
+*.adb
+*.d
+*.lst
+*.sym
+*.lk
+*.hex
+*.mem
+*.map
+*.omf
+*.asm
+*.rel
+*.rst
