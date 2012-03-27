@@ -309,5 +309,18 @@ for line in f:
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map[items[0]])
                 
-    
-print str_bytecode(byte_code)
+if len(sys.argv) == 3:
+    if sys.argv[2] == '-c':
+        ba = str_bytecode(byte_code)
+        sys.stdout.write('static uint8_t attack[]={')
+        for b in ba[:-1]:
+            sys.stdout.write(b + ',')
+        sys.stdout.write(b + '};')
+    if sys.argv[2] == '-b':
+        print str_bytecode(byte_code)
+    if sys.argv[2] == '-i':
+        print byte_code
+    else:
+        print_usage()
+        
+        
