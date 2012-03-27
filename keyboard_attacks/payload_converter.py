@@ -158,6 +158,8 @@ byte_code = []
 
 for line in f:
     items = line.split(' ')
+
+    # Modifier commands
     if (items[0] == 'GUI' or
         items[0] == 'GUIR' or
         items[0] == 'CTRL' or
@@ -174,4 +176,17 @@ for line in f:
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map[items[0]])
 
+    # Delay functionality
+    if (items[0] == 'DELAY'):
+        byte_code.append(DELAY)
+        # High byte
+        byte_code.append((int(items[1]) >> 8) & 0xFF)
+        # Low byte
+        byte_code.append(int(items[1]) & 0xFF)
+
+    # String functionality to type out full strings
+    if (items[0] == 'STRING'):
+        
+    
+    
 print byte_code
