@@ -129,16 +129,26 @@ key_map = {
     # The mod key is taken in as a byte
     # For: Ctrl + Alt + Delete (Assume Left Ctrl and Alt key)
     #      Mod Byte(0b0000 0101) + Delete(0x4C)
-    'MOD_CTRL_L'   , 0,
-    'MOD_SHIFT_L'  , 1,
-    'MOD_ALT_L'    , 2,
-    'MOD_GUI_L'    , 3,
-    'MOD_CTRL_R'   , 4,
-    'MOD_SHIFT_R'  , 5,
-    'MOD_ALT_R'    , 6,
-    'MOD_GUI_R'    , 7
+    'MOD_CTRL'   , 0,
+    'MOD_SHIFT'  , 1,
+    'MOD_ALT'    , 2,
+    'MOD_GUI'    , 3,
+    'MOD_CTRLR'   , 4,
+    'MOD_SHIFTR'  , 5,
+    'MOD_ALTR'    , 6,
+    'MOD_GUIR'    , 7
     }
 
+# 
+# Args:
+#   E: Expression representing some key combination requiring mod keys
+def getModCommands(E):
+    i = 0
+    val = 0
+    while('MOD_' + E[i] in key_map):
+        val = val | (1 << key_map['MOD_' + E[i]])
+        i = i + 1
+    return [val, key_map[items[E[i]].upper()]]
 
 f = open(sys.argv[1])
 byte_code = []
@@ -155,7 +165,8 @@ for line in f:
         items[0] == 'SHIFTR':
         
         if len(items) > 1:
-            get_keyVal(items[1])
+            byte_code.append(MOD)
+            byte_code.extend(getModCommand(items))
         else:
             byte_code.append(KEY_PUSH_AND_SEND)
             byte_code.append(key_map[items[0]])
