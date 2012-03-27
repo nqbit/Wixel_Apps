@@ -117,11 +117,11 @@ key_map = {
     'F13'                : 0x68,
     'F14'                : 0x69,
     'F15'                : 0x6A,
-    'CTRL'               : 0xE0,
+    'CONTROL'            : 0xE0,
     'SHIFT'              : 0xE1,
     'ALT'                : 0xE2,
     'GUI'                : 0xE3,
-    'CTRLR'              : 0xE4,
+    'CONTROLR'           : 0xE4,
     'SHIFTR'             : 0xE5,
     'ALTR'               : 0xE6,
     'GUIR'               : 0xE7,
@@ -130,14 +130,14 @@ key_map = {
     # The mod key is taken in as a byte
     # For: Ctrl + Alt + Delete (Assume Left Ctrl and Alt key)
     #      Mod Byte(0b0000 0101) + Delete(0x4C)
-    'MOD_CTRL'    : 0,
-    'MOD_SHIFT'   : 1,
-    'MOD_ALT'     : 2,
-    'MOD_GUI'     : 3,
-    'MOD_CTRLR'   : 4,
-    'MOD_SHIFTR'  : 5,
-    'MOD_ALTR'    : 6,
-    'MOD_GUIR'    : 7
+    'MOD_CONTROL'   : 0,
+    'MOD_SHIFT'     : 1,
+    'MOD_ALT'       : 2,
+    'MOD_GUI'       : 3,
+    'MOD_CONTROLR'  : 4,
+    'MOD_SHIFTR'    : 5,
+    'MOD_ALTR'      : 6,
+    'MOD_GUIR'      : 7
     }
 
 # 
